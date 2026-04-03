@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --upes-sidebar-bg: #411d5f;
+  --upes-text-primary: #333333;
+  --upes-bg-light: #f5f6f8;
+  --upes-blue: #0465a3;
+  --upes-cyan: #2bc2f3;
+  --upes-purple: #6e3b8f;
+  --upes-button: #1e6fa3;
+}
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  height: 100vh;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}

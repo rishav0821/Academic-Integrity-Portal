@@ -1,0 +1,11 @@
+218: `               <div style={styles.metricIconBgOrange}>`
+219: `                 <FiAlertTriangle size={28} color="#f6a117" />`
+220: `               </div>`
+221: `               <div style={styles.metricInfo}>`
+222: `                 <div style={styles.metricValue}>1</div>`
+223: `                 <div style={styles.metricLabel}>Academic Warnings</div>`
+224: `               </div>`
+225: `             </div>`
+226: `           </div>`
+227: ``
+228: `           {/* PANELS */}`
