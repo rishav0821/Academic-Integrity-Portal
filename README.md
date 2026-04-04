@@ -131,3 +131,14 @@ API and display error messages returned by the server.
 
 Feel free to extend the models, add validation, or integrate with a real
 mail service when moving to production.
+
+---
+
+## Screenshots
+
+<div align="center">
+  <img src="./screenshots/Screenshot%202026-04-04%20122232.png" width="45%" alt="Screenshot 1"/>
+  <img src="./screenshots/Screenshot%202026-04-04%20122252.png" width="45%" alt="Screenshot 2"/>
+  <img src="./screenshots/Screenshot%202026-04-04%20122313.png" width="45%" alt="Screenshot 3"/>
+  <img src="./screenshots/Screenshot%202026-04-04%20122348.png" width="45%" alt="Screenshot 4"/>
+</div>
