@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.js";
 import marksRoutes from "./routes/marks.js";
 import metaRoutes from "./routes/meta.js";
 import analyticsRoutes from "./routes/analytics.js";
+import reportsRoutes from "./routes/reports.js";
 import cors from "cors";
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/marks", marksRoutes);
 app.use("/api/meta", metaRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/reports", reportsRoutes);
 
 import { protect } from "./middleware/authMiddleware.js";
 
@@ -28,13 +30,22 @@ app.get("/api/dashboard", protect, (req, res) => {
 });
 
 const __dirname = path.resolve();
-if (process.env.NODE_ENV === "production" || process.env.RENDER_ENV === "production" || process.env.NODE_ENV) {
-  app.use(express.static(path.join(__dirname, "academic-integrity-frontend/dist")));
+
+// Only serve static files in production
+if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
+  const frontendPath = path.join(__dirname, "academic-integrity-frontend", "dist");
+  app.use(express.static(frontendPath));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "academic-integrity-frontend/dist", "index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Only start the server if not running on Vercel (where Vercel handles the server lifecycle)
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+export default app;

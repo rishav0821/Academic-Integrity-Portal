@@ -42,16 +42,23 @@ export const getDashboardMetrics = async (req, res) => {
     const records = await PerformanceRecord.find({ student: req.user._id }).populate("subject", "name");
     
     if (!records.length) {
-       return res.json({ consistencyScore: 0, warnings: 0, chartData: null });
+       return res.json({ consistencyScore: 0, warnings: 0, allFlags: [], chartData: null });
     }
 
     let totalScore = 0;
     let warnings = 0;
+    let allFlags = [];
     const historyBySem = {};
 
     records.forEach(rc => {
        totalScore += rc.consistencyScore || 100;
-       warnings += (rc.flags && rc.flags.length) ? rc.flags.length : 0;
+       const flagCount = (rc.flags && rc.flags.length) ? rc.flags.length : 0;
+       warnings += flagCount;
+       
+       // Collect all flags from all records
+       if (rc.flags && rc.flags.length > 0) {
+         allFlags.push(...rc.flags);
+       }
        
        const sub = rc.subject ? rc.subject.name : "Unknown Subject";
        if (!historyBySem[rc.semester]) historyBySem[rc.semester] = {};
@@ -81,7 +88,10 @@ export const getDashboardMetrics = async (req, res) => {
        };
     });
 
-    res.json({ consistencyScore, warnings, chartData: { labels: labels.map(l => `Sem ${l}`), datasets } });
+    // Deduplicate flags for cleaner display
+    const uniqueFlags = [...new Set(allFlags)];
+
+    res.json({ consistencyScore, warnings, allFlags: uniqueFlags, chartData: { labels: labels.map(l => `Sem ${l}`), datasets } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

@@ -39,6 +39,7 @@ const Dashboard = () => {
           setPerformanceData(perfRes.data?.consistencyScore ? perfRes.data : {
             consistencyScore: 75,
             warnings: 1,
+            allFlags: ["Declining Trend: Performance has been consistently declining over the last 3 semesters. Recommend academic counseling."],
             chartData: {
               labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
               datasets: [
@@ -291,19 +292,51 @@ const Dashboard = () => {
               
               {/* INSIGHTS PANEL */}
               <div style={styles.panelRight}>
-                <div style={{...styles.card, height: "400px"}}>
+                <div style={{...styles.card, height: "400px", display: "flex", flexDirection: "column"}}>
                   <h3 style={styles.panelTitle}>AI Insights & Warnings</h3>
                   
-                  <div style={{ padding: "15px", background: "#fbe9ed", borderLeft: "4px solid #d7285c", borderRadius: "4px", marginBottom: "15px" }}>
-                    <h4 style={{margin: "0 0 5px 0", color: "#d7285c"}}>Warning: Inconsistent Pattern</h4>
-                    <p style={{margin: 0, fontSize: "13px", color: "#333"}}>Your performance in <strong>Statistics</strong> has dropped catastrophically relative to your high marks in <strong>Maths</strong>. This triggers an illogical pattern alert. Please contact your coordinator.</p>
-                  </div>
+                  <div style={{flex: 1, overflowY: "auto", padding: "0 5px"}}>
+                    {/* Dynamic warnings from anomaly engine flags */}
+                    {performanceData && performanceData.allFlags && performanceData.allFlags.length > 0 ? (
+                      performanceData.allFlags.map((flag, idx) => (
+                        <div key={idx} style={{ padding: "15px", background: "#fbe9ed", borderLeft: "4px solid #d7285c", borderRadius: "4px", marginBottom: "12px" }}>
+                          <h4 style={{margin: "0 0 5px 0", color: "#d7285c"}}>
+                            <span style={{display: "inline-flex", alignItems: "center", gap: "6px"}}>
+                              <FiAlertTriangle size={14} /> Anomaly Detected
+                            </span>
+                          </h4>
+                          <p style={{margin: 0, fontSize: "13px", color: "#333", lineHeight: "1.5"}}>{flag}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <div style={{ padding: "15px", background: "#e6f9ed", borderLeft: "4px solid #0a8a0a", borderRadius: "4px", marginBottom: "12px" }}>
+                        <h4 style={{margin: "0 0 5px 0", color: "#0a8a0a"}}>All Clear</h4>
+                        <p style={{margin: 0, fontSize: "13px", color: "#333"}}>No anomalies detected in your academic records. Your performance patterns are consistent.</p>
+                      </div>
+                    )}
 
-                  <div style={{ padding: "15px", background: "#f9f9f9", borderRadius: "4px" }}>
-                    <h4 style={{margin: "0 0 5px 0", color: "#0465a3"}}>Improvement Area</h4>
-                    <p style={{margin: 0, fontSize: "13px", color: "#666"}}>Focus on foundational statistical theories. Your overall trend indicates strong logic (Maths) but poor application.</p>
-                  </div>
+                    {/* Contextual improvement insights */}
+                    {performanceData && performanceData.consistencyScore < 80 && (
+                      <div style={{ padding: "15px", background: "#fef5e7", borderLeft: "4px solid #f6a117", borderRadius: "4px", marginBottom: "12px" }}>
+                        <h4 style={{margin: "0 0 5px 0", color: "#f6a117"}}>Improvement Needed</h4>
+                        <p style={{margin: 0, fontSize: "13px", color: "#666"}}>Your consistency score is {performanceData.consistencyScore}/100. Focus on maintaining uniform performance across subjects and semesters.</p>
+                      </div>
+                    )}
 
+                    {attendanceData && attendanceData.overallAttendance < 75 && (
+                      <div style={{ padding: "15px", background: "#fbe9ed", borderLeft: "4px solid #d7285c", borderRadius: "4px", marginBottom: "12px" }}>
+                        <h4 style={{margin: "0 0 5px 0", color: "#d7285c"}}>Attendance Risk</h4>
+                        <p style={{margin: 0, fontSize: "13px", color: "#666"}}>Your attendance ({attendanceData.overallAttendance}%) is below the required 75% threshold. Research shows strong correlation between attendance and academic integrity outcomes.</p>
+                      </div>
+                    )}
+
+                    {performanceData && performanceData.consistencyScore >= 90 && performanceData.warnings === 0 && (
+                      <div style={{ padding: "15px", background: "#f9f9f9", borderRadius: "4px" }}>
+                        <h4 style={{margin: "0 0 5px 0", color: "#0465a3"}}>Excellent Standing</h4>
+                        <p style={{margin: 0, fontSize: "13px", color: "#666"}}>Your academic integrity score is excellent. Maintain this consistency for top-tier recommendations.</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
            </div>
