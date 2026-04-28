@@ -1,6 +1,7 @@
 {
   "name": "academic-integrity-system",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "postinstall": "npm install --prefix backend && npm install --prefix academic-integrity-frontend && npm run build --prefix academic-integrity-frontend",
     "build": "cp -r academic-integrity-frontend/dist public",
@@ -8,7 +9,15 @@
     "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix academic-integrity-frontend\""
   },
   "dependencies": {
-    "react-router-dom": "^7.13.1"
+    "react-router-dom": "^7.13.1",
+    "axios": "^1.13.6",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.5.0",
+    "nodemailer": "^8.0.4"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
