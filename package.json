@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "postinstall": "npm install --prefix backend && npm install --prefix academic-integrity-frontend && npm run build --prefix academic-integrity-frontend",
+    "build": "cp -r academic-integrity-frontend/dist public",
     "start": "node backend/server.js",
     "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix academic-integrity-frontend\""
   },
