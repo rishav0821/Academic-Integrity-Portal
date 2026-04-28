@@ -6,6 +6,7 @@ import marksRoutes from "../backend/routes/marks.js";
 import metaRoutes from "../backend/routes/meta.js";
 import analyticsRoutes from "../backend/routes/analytics.js";
 import reportsRoutes from "../backend/routes/reports.js";
+import { protect } from "../backend/middleware/authMiddleware.js";
 import cors from "cors";
 
 dotenv.config();
@@ -21,5 +22,9 @@ app.use("/api/marks", marksRoutes);
 app.use("/api/meta", metaRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/reports", reportsRoutes);
+
+app.get("/api/dashboard", protect, (req, res) => {
+  res.json({ message: "Protected dashboard route", user: req.user });
+});
 
 export default app;
