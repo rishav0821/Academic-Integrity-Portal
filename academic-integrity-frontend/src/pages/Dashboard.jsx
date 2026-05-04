@@ -27,41 +27,8 @@ const Dashboard = () => {
              api.get("/analytics/attendance"),
              api.get("/marks/dashboard")
           ]);
-          setAttendanceData(attRes.data?.overallAttendance ? attRes.data : {
-            overallAttendance: 86,
-            trends: { labels: ["Week 1", "Week 2", "Week 3", "Week 4"], data: [95, 88, 70, 82] },
-            subjects: [
-              { name: "Mathematics", attendance: 92 },
-              { name: "Statistics", attendance: 65 },
-              { name: "Computer Science", attendance: 89 }
-            ]
-          });
-          setPerformanceData(perfRes.data?.consistencyScore ? perfRes.data : {
-            consistencyScore: 75,
-            warnings: 1,
-            allFlags: ["Declining Trend: Performance has been consistently declining over the last 3 semesters. Recommend academic counseling."],
-            chartData: {
-              labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
-              datasets: [
-                {
-                  label: 'Maths Performance',
-                  data: [65, 60, 80, 81],
-                  borderColor: 'rgb(75, 192, 192)',
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  tension: 0.1,
-                  fill: false
-                },
-                {
-                  label: 'Statistics Performance',
-                  data: [70, 62, 20, 15],
-                  borderColor: 'rgb(255, 99, 132)',
-                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                  tension: 0.1,
-                  fill: false
-                }
-              ]
-            }
-          });
+          setAttendanceData(attRes.data);
+          setPerformanceData(perfRes.data);
         } else if (userRole === "teacher" || userRole === "admin") {
           const gradRes = await api.get("/analytics/grading-consistency");
           setGradingData(gradRes.data);
@@ -75,7 +42,7 @@ const Dashboard = () => {
 
   const role = userInfo?.role || "student";
 
-  // Fallback to mock data if API dataset is empty or undefined
+  // Fallback empty chart state if no records exist
   const chartData = (performanceData && performanceData.chartData) ? performanceData.chartData : {
     labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
     datasets: [

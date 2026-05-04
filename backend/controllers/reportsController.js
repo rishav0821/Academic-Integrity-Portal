@@ -164,7 +164,27 @@ export const runGroupDetection = async (req, res) => {
     const workingDir = path.join(process.cwd(), "cheating_detection");
 
     console.log("Starting Python Intelligence Engine...");
+
+    // Vercel Serverless environment fallback (Demo Mode)
+    if (process.env.VERCEL) {
+      console.log("Vercel environment detected. Running Demo Mode fallback...");
+      
+      // Simulate 2-second processing time for the UI
+      setTimeout(() => {
+        try {
+          const filePath = path.join(workingDir, "detection_results.json");
+          const data = fs.readFileSync(filePath, "utf-8");
+          res.status(200).json(JSON.parse(data));
+        } catch (readError) {
+          console.error("Error reading fallback results:", readError);
+          res.status(500).json({ message: "Server error running engine" });
+        }
+      }, 2000);
+      
+      return;
+    }
     
+    // Normal Local Execution
     exec(`python run.py`, { cwd: workingDir }, (error, stdout, stderr) => {
       if (error) {
         console.error(`Exec error: ${error}`);
