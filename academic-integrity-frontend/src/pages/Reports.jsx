@@ -61,16 +61,19 @@ const Reports = () => {
     }
   }, []);
 
+  const [engineStatus, setEngineStatus] = useState(null); // { type: 'success'|'error', msg: string }
+
   // Run Python Intelligence Engine
   const handleRunEngine = async () => {
     setRunningEngine(true);
+    setEngineStatus(null);
     try {
       const res = await api.post("/reports/run-group-detection");
       setGroupData(res.data);
-      alert("Intelligence Engine analysis complete! Results updated.");
+      setEngineStatus({ type: "success", msg: "Intelligence Engine analysis complete! Results updated." });
     } catch (err) {
       console.error("Engine run error:", err);
-      alert("Failed to run analysis engine. Check backend logs.");
+      setEngineStatus({ type: "error", msg: "Failed to run analysis engine. Check backend logs." });
     } finally {
       setRunningEngine(false);
     }
@@ -335,6 +338,26 @@ const Reports = () => {
                 <FiCpu /> {runningEngine ? "Running Intelligence Engine..." : "Run Intelligence Engine"}
               </button>
             </div>
+
+            {/* Engine Status Banner */}
+            {engineStatus && (
+              <div style={{
+                padding: "12px 18px",
+                marginBottom: "20px",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                background: engineStatus.type === "success" ? "#e6f9ed" : "#fbe9ed",
+                borderLeft: `4px solid ${engineStatus.type === "success" ? "#0a8a0a" : "#d7285c"}`,
+                color: engineStatus.type === "success" ? "#0a8a0a" : "#d7285c",
+                fontWeight: "600",
+                fontSize: "14px"
+              }}>
+                {engineStatus.type === "success" ? <FiCheckCircle /> : <FiAlertTriangle />}
+                {engineStatus.msg}
+              </div>
+            )}
 
             {groupLoading ? (
                <div style={styles.loadingBox}>
