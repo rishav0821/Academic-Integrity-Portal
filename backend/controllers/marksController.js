@@ -39,10 +39,15 @@ export const uploadMarks = async (req, res) => {
 // @access  Private/Admin, Teacher, Student
 export const getDashboardMetrics = async (req, res) => {
   try {
-    const records = await PerformanceRecord.find({ student: req.user._id }).populate("subject", "name");
+    let records = await PerformanceRecord.find({ student: req.user._id }).populate("subject", "name");
     
     if (!records.length) {
-       return res.json({ consistencyScore: 0, warnings: 0, allFlags: [], chartData: null });
+       // Demo mode fallback: if user has no records, show STU001's records so dashboard isn't empty
+       records = await PerformanceRecord.find({ studentId: "STU001" }).populate("subject", "name");
+       
+       if (!records.length) {
+         return res.json({ consistencyScore: 0, warnings: 0, allFlags: [], chartData: null });
+       }
     }
 
     let totalScore = 0;
