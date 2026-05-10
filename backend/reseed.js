@@ -16,14 +16,33 @@ const reseed = async () => {
 
     // ── Subjects ──────────────────────────────────────────
     const subNames = [
-      "Machine Learning",
-      "Operating Systems",
+      // Semester 1 & 2
+      "Programming Fundamentals",
+      "Mathematics for Computing",
+      "Digital Logic Design",
       "Data Structures",
-      "Neural Networks",
-      "Networking",
-      "Advanced Statistics",
-      "Software Engineering",
+      "Discrete Mathematics",
+
+      // Semester 3 & 4
+      "Object Oriented Programming",
+      "Operating Systems",
       "Database Management",
+      "Computer Organization & Architecture",
+      "Theory of Computation",
+
+      // Semester 5 & 6
+      "Algorithms Design & Analysis",
+      "Software Engineering",
+      "Computer Networks",
+      "Advanced Statistics",
+      "Compiler Design",
+
+      // Semester 7 & 8
+      "Machine Learning",
+      "Artificial Intelligence",
+      "Neural Networks",
+      "Cloud Computing",
+      "Cyber Security",
     ];
     const subMap = {};
     for (let i = 0; i < subNames.length; i++) {
@@ -137,19 +156,99 @@ const reseed = async () => {
       { studentId: "STU803", name: "Xena Fernandez", course: "BTech", semester: 4, subject: subMap["Database Management"], section: "B", attendance: 90, marks: 88, aiScore: 5,  plagiarism: 2,  trustScore: 96, teacher: teacherC._id },
       { studentId: "STU804", name: "Yash Chopra",    course: "BTech", semester: 4, subject: subMap["Database Management"], section: "B", attendance: 88, marks: 82, aiScore: 8,  plagiarism: 3,  trustScore: 93, teacher: teacherC._id },
       { studentId: "STU805", name: "Zara Sheikh",    course: "BTech", semester: 4, subject: subMap["Database Management"], section: "B", attendance: 85, marks: 79, aiScore: 10, plagiarism: 4,  trustScore: 91, teacher: teacherC._id },
+
+      // ── NEW CS SUBJECTS — Semesters 1–8 ──────────────────
+
+      // Programming Fundamentals — Sem 1 (mixed class)
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 1, subject: subMap["Programming Fundamentals"], section: "A", attendance: 85, marks: 72, aiScore: 10, plagiarism: 5,  trustScore: 88, teacher: teacherA._id },
+      { studentId: "CS002", name: "Bhavna Singh",     course: "BTech CS", semester: 1, subject: subMap["Programming Fundamentals"], section: "A", attendance: 90, marks: 68, aiScore: 8,  plagiarism: 3,  trustScore: 90, teacher: teacherA._id },
+      { studentId: "CS003", name: "Chirag Mehta",     course: "BTech CS", semester: 1, subject: subMap["Programming Fundamentals"], section: "A", attendance: 78, marks: 55, aiScore: 15, plagiarism: 8,  trustScore: 75, teacher: teacherA._id },
+      { studentId: "CS004", name: "Diya Rao",         course: "BTech CS", semester: 1, subject: subMap["Programming Fundamentals"], section: "B", attendance: 82, marks: 80, aiScore: 5,  plagiarism: 2,  trustScore: 93, teacher: teacherB._id },
+      { studentId: "CS005", name: "Eshan Malhotra",   course: "BTech CS", semester: 1, subject: subMap["Programming Fundamentals"], section: "B", attendance: 75, marks: 61, aiScore: 20, plagiarism: 12, trustScore: 70, teacher: teacherB._id },
+
+      // Mathematics for Computing — Sem 1
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 1, subject: subMap["Mathematics for Computing"], section: "A", attendance: 88, marks: 65, aiScore: 5,  plagiarism: 2,  trustScore: 87, teacher: teacherA._id },
+      { studentId: "CS002", name: "Bhavna Singh",     course: "BTech CS", semester: 1, subject: subMap["Mathematics for Computing"], section: "A", attendance: 91, marks: 78, aiScore: 3,  plagiarism: 1,  trustScore: 92, teacher: teacherA._id },
+      { studentId: "CS003", name: "Chirag Mehta",     course: "BTech CS", semester: 1, subject: subMap["Mathematics for Computing"], section: "A", attendance: 76, marks: 52, aiScore: 10, plagiarism: 5,  trustScore: 72, teacher: teacherA._id },
+      { studentId: "CS006", name: "Fatima Qureshi",   course: "BTech CS", semester: 1, subject: subMap["Mathematics for Computing"], section: "B", attendance: 94, marks: 88, aiScore: 2,  plagiarism: 1,  trustScore: 96, teacher: teacherB._id },
+      { studentId: "CS007", name: "Gaurav Tiwari",    course: "BTech CS", semester: 1, subject: subMap["Mathematics for Computing"], section: "B", attendance: 80, marks: 60, aiScore: 8,  plagiarism: 4,  trustScore: 80, teacher: teacherB._id },
+
+      // Digital Logic Design — Sem 1
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 1, subject: subMap["Digital Logic Design"], section: "A", attendance: 83, marks: 70, aiScore: 6,  plagiarism: 3,  trustScore: 85, teacher: teacherC._id },
+      { studentId: "CS004", name: "Diya Rao",         course: "BTech CS", semester: 1, subject: subMap["Digital Logic Design"], section: "A", attendance: 87, marks: 76, aiScore: 4,  plagiarism: 2,  trustScore: 90, teacher: teacherC._id },
+      { studentId: "CS008", name: "Hema Pillai",      course: "BTech CS", semester: 1, subject: subMap["Digital Logic Design"], section: "B", attendance: 79, marks: 58, aiScore: 12, plagiarism: 7,  trustScore: 74, teacher: teacherC._id },
+      { studentId: "CS009", name: "Ishan Kapoor",     course: "BTech CS", semester: 1, subject: subMap["Digital Logic Design"], section: "B", attendance: 85, marks: 74, aiScore: 7,  plagiarism: 3,  trustScore: 87, teacher: teacherC._id },
+
+      // Discrete Mathematics — Sem 2
+      { studentId: "CS002", name: "Bhavna Singh",     course: "BTech CS", semester: 2, subject: subMap["Discrete Mathematics"], section: "A", attendance: 88, marks: 73, aiScore: 6,  plagiarism: 2,  trustScore: 89, teacher: teacherA._id },
+      { studentId: "CS005", name: "Eshan Malhotra",   course: "BTech CS", semester: 2, subject: subMap["Discrete Mathematics"], section: "A", attendance: 72, marks: 50, aiScore: 18, plagiarism: 10, trustScore: 65, teacher: teacherA._id },
+      { studentId: "CS006", name: "Fatima Qureshi",   course: "BTech CS", semester: 2, subject: subMap["Discrete Mathematics"], section: "B", attendance: 95, marks: 85, aiScore: 2,  plagiarism: 1,  trustScore: 97, teacher: teacherB._id },
+      { studentId: "CS010", name: "Jai Sharma",       course: "BTech CS", semester: 2, subject: subMap["Discrete Mathematics"], section: "B", attendance: 82, marks: 63, aiScore: 10, plagiarism: 5,  trustScore: 78, teacher: teacherB._id },
+
+      // Object Oriented Programming — Sem 3
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 3, subject: subMap["Object Oriented Programming"], section: "A", attendance: 86, marks: 78, aiScore: 8,  plagiarism: 4,  trustScore: 86, teacher: teacherA._id },
+      { studentId: "CS002", name: "Bhavna Singh",     course: "BTech CS", semester: 3, subject: subMap["Object Oriented Programming"], section: "A", attendance: 90, marks: 82, aiScore: 5,  plagiarism: 2,  trustScore: 91, teacher: teacherA._id },
+      { studentId: "CS003", name: "Chirag Mehta",     course: "BTech CS", semester: 3, subject: subMap["Object Oriented Programming"], section: "A", attendance: 74, marks: 60, aiScore: 20, plagiarism: 15, trustScore: 65, teacher: teacherA._id, flags: ["High plagiarism"] },
+      { studentId: "CS011", name: "Kriti Bose",       course: "BTech CS", semester: 3, subject: subMap["Object Oriented Programming"], section: "B", attendance: 88, marks: 85, aiScore: 4,  plagiarism: 1,  trustScore: 93, teacher: teacherB._id },
+      { studentId: "CS012", name: "Lakshay Gupta",    course: "BTech CS", semester: 3, subject: subMap["Object Oriented Programming"], section: "B", attendance: 78, marks: 67, aiScore: 14, plagiarism: 8,  trustScore: 74, teacher: teacherB._id },
+
+      // Computer Organization & Architecture — Sem 3
+      { studentId: "CS004", name: "Diya Rao",         course: "BTech CS", semester: 3, subject: subMap["Computer Organization & Architecture"], section: "A", attendance: 84, marks: 71, aiScore: 7,  plagiarism: 3,  trustScore: 84, teacher: teacherC._id },
+      { studentId: "CS007", name: "Gaurav Tiwari",    course: "BTech CS", semester: 3, subject: subMap["Computer Organization & Architecture"], section: "A", attendance: 80, marks: 65, aiScore: 10, plagiarism: 5,  trustScore: 79, teacher: teacherC._id },
+      { studentId: "CS013", name: "Meena Arora",      course: "BTech CS", semester: 3, subject: subMap["Computer Organization & Architecture"], section: "B", attendance: 90, marks: 79, aiScore: 5,  plagiarism: 2,  trustScore: 90, teacher: teacherC._id },
+
+      // Theory of Computation — Sem 4 (harder subject, lower scores)
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 4, subject: subMap["Theory of Computation"], section: "A", attendance: 80, marks: 55, aiScore: 12, plagiarism: 6,  trustScore: 75, teacher: teacherA._id },
+      { studentId: "CS003", name: "Chirag Mehta",     course: "BTech CS", semester: 4, subject: subMap["Theory of Computation"], section: "A", attendance: 70, marks: 48, aiScore: 20, plagiarism: 12, trustScore: 60, teacher: teacherA._id, flags: ["Low marks", "High AI usage"] },
+      { studentId: "CS006", name: "Fatima Qureshi",   course: "BTech CS", semester: 4, subject: subMap["Theory of Computation"], section: "B", attendance: 92, marks: 72, aiScore: 4,  plagiarism: 2,  trustScore: 90, teacher: teacherB._id },
+      { studentId: "CS014", name: "Nikhil Verma",     course: "BTech CS", semester: 4, subject: subMap["Theory of Computation"], section: "B", attendance: 75, marks: 50, aiScore: 15, plagiarism: 8,  trustScore: 68, teacher: teacherB._id },
+
+      // Algorithms Design & Analysis — Sem 5
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 5, subject: subMap["Algorithms Design & Analysis"], section: "A", attendance: 87, marks: 76, aiScore: 9,  plagiarism: 4,  trustScore: 85, teacher: teacherA._id },
+      { studentId: "CS002", name: "Bhavna Singh",     course: "BTech CS", semester: 5, subject: subMap["Algorithms Design & Analysis"], section: "A", attendance: 91, marks: 80, aiScore: 6,  plagiarism: 2,  trustScore: 90, teacher: teacherA._id },
+      { studentId: "CS004", name: "Diya Rao",         course: "BTech CS", semester: 5, subject: subMap["Algorithms Design & Analysis"], section: "A", attendance: 85, marks: 74, aiScore: 8,  plagiarism: 3,  trustScore: 87, teacher: teacherA._id },
+      { studentId: "CS015", name: "Om Prakash",       course: "BTech CS", semester: 5, subject: subMap["Algorithms Design & Analysis"], section: "B", attendance: 78, marks: 62, aiScore: 16, plagiarism: 9,  trustScore: 71, teacher: teacherB._id },
+
+      // Computer Networks — Sem 5
+      { studentId: "CS005", name: "Eshan Malhotra",   course: "BTech CS", semester: 5, subject: subMap["Computer Networks"], section: "A", attendance: 74, marks: 58, aiScore: 22, plagiarism: 14, trustScore: 62, teacher: teacherB._id, flags: ["High plagiarism"] },
+      { studentId: "CS006", name: "Fatima Qureshi",   course: "BTech CS", semester: 5, subject: subMap["Computer Networks"], section: "A", attendance: 93, marks: 84, aiScore: 3,  plagiarism: 1,  trustScore: 96, teacher: teacherB._id },
+      { studentId: "CS011", name: "Kriti Bose",       course: "BTech CS", semester: 5, subject: subMap["Computer Networks"], section: "B", attendance: 86, marks: 77, aiScore: 7,  plagiarism: 3,  trustScore: 88, teacher: teacherC._id },
+      { studentId: "CS016", name: "Prerna Joshi",     course: "BTech CS", semester: 5, subject: subMap["Computer Networks"], section: "B", attendance: 80, marks: 69, aiScore: 11, plagiarism: 6,  trustScore: 79, teacher: teacherC._id },
+
+      // Compiler Design — Sem 6
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 6, subject: subMap["Compiler Design"], section: "A", attendance: 84, marks: 68, aiScore: 10, plagiarism: 5,  trustScore: 82, teacher: teacherA._id },
+      { studentId: "CS007", name: "Gaurav Tiwari",    course: "BTech CS", semester: 6, subject: subMap["Compiler Design"], section: "A", attendance: 79, marks: 60, aiScore: 14, plagiarism: 7,  trustScore: 74, teacher: teacherA._id },
+      { studentId: "CS012", name: "Lakshay Gupta",    course: "BTech CS", semester: 6, subject: subMap["Compiler Design"], section: "B", attendance: 88, marks: 75, aiScore: 6,  plagiarism: 3,  trustScore: 86, teacher: teacherC._id },
+
+      // Artificial Intelligence — Sem 7
+      { studentId: "CS002", name: "Bhavna Singh",     course: "BTech CS", semester: 7, subject: subMap["Artificial Intelligence"], section: "A", attendance: 90, marks: 82, aiScore: 8,  plagiarism: 3,  trustScore: 89, teacher: teacherA._id },
+      { studentId: "CS004", name: "Diya Rao",         course: "BTech CS", semester: 7, subject: subMap["Artificial Intelligence"], section: "A", attendance: 88, marks: 79, aiScore: 10, plagiarism: 4,  trustScore: 86, teacher: teacherA._id },
+      { studentId: "CS006", name: "Fatima Qureshi",   course: "BTech CS", semester: 7, subject: subMap["Artificial Intelligence"], section: "A", attendance: 95, marks: 90, aiScore: 3,  plagiarism: 1,  trustScore: 97, teacher: teacherA._id },
+      { studentId: "CS017", name: "Raj Nair",         course: "BTech CS", semester: 7, subject: subMap["Artificial Intelligence"], section: "B", attendance: 76, marks: 63, aiScore: 35, plagiarism: 28, trustScore: 45, teacher: teacherB._id, flags: ["High AI usage", "High plagiarism"] },
+
+      // Cloud Computing — Sem 7
+      { studentId: "CS001", name: "Aditya Pandey",    course: "BTech CS", semester: 7, subject: subMap["Cloud Computing"], section: "A", attendance: 86, marks: 74, aiScore: 9,  plagiarism: 4,  trustScore: 84, teacher: teacherC._id },
+      { studentId: "CS003", name: "Chirag Mehta",     course: "BTech CS", semester: 7, subject: subMap["Cloud Computing"], section: "A", attendance: 80, marks: 68, aiScore: 18, plagiarism: 10, trustScore: 68, teacher: teacherC._id },
+      { studentId: "CS013", name: "Meena Arora",      course: "BTech CS", semester: 7, subject: subMap["Cloud Computing"], section: "B", attendance: 91, marks: 80, aiScore: 5,  plagiarism: 2,  trustScore: 92, teacher: teacherC._id },
+
+      // Cyber Security — Sem 8
+      { studentId: "CS002", name: "Bhavna Singh",     course: "BTech CS", semester: 8, subject: subMap["Cyber Security"], section: "A", attendance: 92, marks: 86, aiScore: 6,  plagiarism: 2,  trustScore: 93, teacher: teacherA._id },
+      { studentId: "CS006", name: "Fatima Qureshi",   course: "BTech CS", semester: 8, subject: subMap["Cyber Security"], section: "A", attendance: 96, marks: 91, aiScore: 2,  plagiarism: 1,  trustScore: 98, teacher: teacherA._id },
+      { studentId: "CS018", name: "Sameer Hussain",   course: "BTech CS", semester: 8, subject: subMap["Cyber Security"], section: "B", attendance: 82, marks: 72, aiScore: 12, plagiarism: 6,  trustScore: 82, teacher: teacherB._id },
+      { studentId: "CS019", name: "Tanya Misra",      course: "BTech CS", semester: 8, subject: subMap["Cyber Security"], section: "B", attendance: 78, marks: 65, aiScore: 20, plagiarism: 15, trustScore: 65, teacher: teacherB._id },
+      { studentId: "CS020", name: "Uday Shankar",     course: "BTech CS", semester: 8, subject: subMap["Cyber Security"], section: "B", attendance: 70, marks: 58, aiScore: 40, plagiarism: 35, trustScore: 40, teacher: teacherB._id, flags: ["High AI usage", "High plagiarism", "Low trust score"] },
     ];
 
     await PerformanceRecord.insertMany(DATA);
-    console.log(`✅ Seeded ${DATA.length} performance records.`);
-    console.log("\n📊 Summary:");
-    console.log("  • Machine Learning (Sem 1→3): Anomaly spike trigger ✓");
-    console.log("  • Operating Systems (5 identical marks): Group cheating trigger ✓");
-    console.log("  • Data Structures (4 identical marks): Group cheating trigger ✓");
-    console.log("  • Neural Networks (all 90-94%): Too-easy assessment trigger ✓");
-    console.log("  • Networking (uniform 64-66): Low discrimination trigger ✓");
-    console.log("  • Advanced Statistics (Sec A 74 vs Sec B 55): Grading gap trigger ✓");
-    console.log("  • Software Engineering (Sec A 68 vs Sec C 82): Grading gap trigger ✓");
-    console.log("  • Database Management: Flagged records for full report ✓");
+    console.log(`✅ Seeded ${DATA.length} performance records across 20 CS subjects.`);
+    console.log("\n📚 CS Subjects seeded:");
+    subNames.forEach((s, i) => console.log(`  ${i + 1}. ${s}`));
+    console.log("\n📊 Intelligence triggers:");
+    console.log("  • Anomaly: Machine Learning Sem1→3 spike ✓");
+    console.log("  • Group Cheating: OS (5 identical), DS (4 identical) ✓");
+    console.log("  • Assessment Quality: Neural Networks too-easy ✓");
+    console.log("  • Grading Consistency: Adv. Stats 19-mark gap ✓");
+    console.log("  • Full Report: 12+ flagged records across subjects ✓");
     process.exit(0);
   } catch (error) {
     console.error("❌ Reseed error:", error);
