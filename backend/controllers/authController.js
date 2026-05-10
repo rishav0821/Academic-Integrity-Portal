@@ -123,3 +123,42 @@ export const getProfile = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const { name, phone, department, bio, studentId, currentPassword, newPassword } = req.body;
+
+    // Update basic fields
+    if (name)       user.name       = name;
+    if (phone !== undefined)      user.phone      = phone;
+    if (department !== undefined) user.department = department;
+    if (bio !== undefined)        user.bio        = bio;
+    if (studentId !== undefined)  user.studentId  = studentId;
+
+    // Handle password change
+    if (newPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({ message: "Current password is required to set a new password." });
+      }
+      const isMatch = await user.matchPassword(currentPassword);
+      if (!isMatch) {
+        return res.status(400).json({ message: "Current password is incorrect." });
+      }
+      if (newPassword.length < 6) {
+        return res.status(400).json({ message: "New password must be at least 6 characters." });
+      }
+      user.password = newPassword; // pre-save hook will hash it
+    }
+
+    await user.save();
+
+    const updated = await User.findById(user._id).select("-password");
+    res.json({ message: "Profile updated successfully", user: updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
