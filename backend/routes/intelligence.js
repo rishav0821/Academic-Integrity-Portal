@@ -9,7 +9,7 @@ import {
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-const guard = [protect, authorizeRoles("teacher", "admin")];
+const guard = [protect, authorizeRoles("teacher", "admin", "Admin", "Teacher")];
 
 router.get("/anomalies",            ...guard, getPerformanceAnomalies);
 router.get("/group-cheating",       ...guard, getGroupCheating);

@@ -50,8 +50,15 @@ const Spinner = () => (
 const AnomaliesTab = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => { api.get("/intelligence/anomalies").then(r => setData(r.data)).finally(() => setLoading(false)); }, []);
+  const [error, setError] = useState(null);
+  useEffect(() => { 
+    api.get("/intelligence/anomalies")
+      .then(r => setData(r.data))
+      .catch(err => setError(err.response?.data?.message || err.message))
+      .finally(() => setLoading(false)); 
+  }, []);
   if (loading) return <Spinner />;
+  if (error || !data) return <div style={{ color: "#ef4444", padding: 20 }}>Error loading anomalies: {error}</div>;
   return (
     <div>
       <StatRow stats={[
@@ -97,9 +104,16 @@ const AnomaliesTab = () => {
 const GroupCheatingTab = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [open, setOpen] = useState({});
-  useEffect(() => { api.get("/intelligence/group-cheating").then(r => setData(r.data)).finally(() => setLoading(false)); }, []);
+  useEffect(() => { 
+    api.get("/intelligence/group-cheating")
+      .then(r => setData(r.data))
+      .catch(err => setError(err.response?.data?.message || err.message))
+      .finally(() => setLoading(false)); 
+  }, []);
   if (loading) return <Spinner />;
+  if (error || !data) return <div style={{ color: "#ef4444", padding: 20 }}>Error loading group cheating data: {error}</div>;
   return (
     <div>
       <StatRow stats={[
@@ -140,8 +154,15 @@ const GroupCheatingTab = () => {
 const AssessmentTab = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => { api.get("/intelligence/assessment-quality").then(r => setData(r.data)).finally(() => setLoading(false)); }, []);
+  const [error, setError] = useState(null);
+  useEffect(() => { 
+    api.get("/intelligence/assessment-quality")
+      .then(r => setData(r.data))
+      .catch(err => setError(err.response?.data?.message || err.message))
+      .finally(() => setLoading(false)); 
+  }, []);
   if (loading) return <Spinner />;
+  if (error || !data) return <div style={{ color: "#ef4444", padding: 20 }}>Error loading assessment quality: {error}</div>;
   const RATING = { Good: "#10b981", Moderate: "#f59e0b", Poor: "#ef4444" };
   return (
     <div>
@@ -193,8 +214,15 @@ const AssessmentTab = () => {
 const GradingTab = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => { api.get("/intelligence/grading-consistency").then(r => setData(r.data)).finally(() => setLoading(false)); }, []);
+  const [error, setError] = useState(null);
+  useEffect(() => { 
+    api.get("/intelligence/grading-consistency")
+      .then(r => setData(r.data))
+      .catch(err => setError(err.response?.data?.message || err.message))
+      .finally(() => setLoading(false)); 
+  }, []);
   if (loading) return <Spinner />;
+  if (error || !data) return <div style={{ color: "#ef4444", padding: 20 }}>Error loading grading consistency: {error}</div>;
   return (
     <div>
       <StatRow stats={[
@@ -247,8 +275,15 @@ const GradingTab = () => {
 const ReportTab = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => { api.get("/intelligence/full-report").then(r => setData(r.data)).finally(() => setLoading(false)); }, []);
+  const [error, setError] = useState(null);
+  useEffect(() => { 
+    api.get("/intelligence/full-report")
+      .then(r => setData(r.data))
+      .catch(err => setError(err.response?.data?.message || err.message))
+      .finally(() => setLoading(false)); 
+  }, []);
   if (loading) return <Spinner />;
+  if (error || !data) return <div style={{ color: "#ef4444", padding: 20 }}>Error loading full report: {error}</div>;
   const { overview, highlights, subjectSummary, recommendations } = data;
   return (
     <div>
