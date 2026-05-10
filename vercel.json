@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "npm install --prefix academic-integrity-frontend && npm run build --prefix academic-integrity-frontend",
+  "outputDirectory": "academic-integrity-frontend/dist",
   "rewrites": [
     {
       "source": "/api/(.*)",
