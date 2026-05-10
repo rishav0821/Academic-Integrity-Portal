@@ -7,6 +7,7 @@ import metaRoutes from "../backend/routes/meta.js";
 import analyticsRoutes from "../backend/routes/analytics.js";
 import reportsRoutes from "../backend/routes/reports.js";
 import requestsRoutes from "../backend/routes/requests.js";
+import intelligenceRoutes from "../backend/routes/intelligence.js";
 import { protect } from "../backend/middleware/authMiddleware.js";
 import cors from "cors";
 
@@ -23,7 +24,8 @@ app.use("/api/marks", marksRoutes);
 app.use("/api/meta", metaRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/reports", reportsRoutes);
-app.use("/api/requests", requestsRoutes);
+app.use("/api/requests",     requestsRoutes);
+app.use("/api/intelligence", intelligenceRoutes);
 
 app.get("/api/dashboard", protect, (req, res) => {
   res.json({ message: "Protected dashboard route", user: req.user });

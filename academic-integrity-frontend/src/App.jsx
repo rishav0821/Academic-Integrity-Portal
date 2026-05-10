@@ -12,6 +12,7 @@ import CourseDetail from "./pages/CourseDetail";
 import Submissions from "./pages/Submissions";
 import DataEntry from "./pages/DataEntry";
 import Tools from "./pages/Tools";
+import Intelligence from "./pages/Intelligence";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -94,6 +95,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Reports />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/intelligence"
+          element={
+            <ProtectedRoute>
+              <Intelligence />
             </ProtectedRoute>
           }
         />

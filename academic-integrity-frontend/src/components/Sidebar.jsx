@@ -28,12 +28,12 @@ const Sidebar = () => {
       flexShrink: 0,
       borderRight: "1px solid #2a3a58"
     }}>
-      <Link to="/dashboard" style={getStyle("/dashboard")} title="Dashboard"><FiCalendar /></Link>
-      <Link to="/profile"   style={getStyle("/profile")}   title="Profile"><FiUser /></Link>
-      <Link to="/tools"     style={getStyle("/tools")}     title="Tools"><FiTool /></Link>
-      <Link to="/reports"   style={getStyle("/reports")}   title="Integrity Reports"><FiFlag /></Link>
-      <Link to="/courses"   style={getStyle("/courses")}   title="Courses"><FiCheckSquare /></Link>
-      <div style={{ ...getStyle(""), cursor: "default" }}><FiFileText /></div>
+      <Link to="/dashboard"    style={getStyle("/dashboard")}    title="Dashboard"><FiCalendar /></Link>
+      <Link to="/profile"      style={getStyle("/profile")}      title="Profile"><FiUser /></Link>
+      <Link to="/tools"        style={getStyle("/tools")}        title="Requests"><FiTool /></Link>
+      <Link to="/intelligence" style={getStyle("/intelligence")} title="Intelligence Engine"><FiFlag /></Link>
+      <Link to="/courses"      style={getStyle("/courses")}      title="Courses"><FiCheckSquare /></Link>
+      <Link to="/reports"      style={getStyle("/reports")}      title="Reports"><FiFileText /></Link>
 
       <div style={{ flex: 1 }} />
 
