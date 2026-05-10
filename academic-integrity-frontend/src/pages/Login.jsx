@@ -77,7 +77,7 @@ const Login = () => {
     <div className="auth-root">
       {/* ── LEFT ── */}
       <div className="auth-left">
-        <h2 className="auth-left-title">Welcome to<br />Student Portal</h2>
+        <h2 className="auth-left-title">Welcome to<br />Integrity Portal</h2>
         <p className="auth-left-sub">Academic Integrity Intelligence System</p>
         <Illustration />
       </div>
