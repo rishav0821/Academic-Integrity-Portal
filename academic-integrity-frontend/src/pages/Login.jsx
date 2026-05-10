@@ -2,7 +2,49 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
-import { FiRefreshCcw } from "react-icons/fi";
+import { FiMail, FiLock, FiEye, FiEyeOff, FiAlertCircle } from "react-icons/fi";
+
+/* Inline SVG illustration — study/portal scene */
+const Illustration = () => (
+  <svg viewBox="0 0 400 320" className="auth-illustration" xmlns="http://www.w3.org/2000/svg">
+    {/* Background circle */}
+    <circle cx="200" cy="160" r="130" fill="rgba(255,255,255,0.12)" />
+    <circle cx="200" cy="160" r="100" fill="rgba(255,255,255,0.08)" />
+    {/* Screen / laptop */}
+    <rect x="120" y="100" width="160" height="110" rx="8" fill="rgba(255,255,255,0.9)" />
+    <rect x="128" y="108" width="144" height="90" rx="4" fill="#1a1a2e" />
+    {/* Screen content */}
+    <rect x="136" y="120" width="80" height="6" rx="3" fill="#e91e8c" />
+    <rect x="136" y="132" width="60" height="4" rx="2" fill="rgba(255,255,255,0.4)" />
+    <rect x="136" y="142" width="70" height="4" rx="2" fill="rgba(255,255,255,0.3)" />
+    <rect x="136" y="152" width="50" height="4" rx="2" fill="rgba(255,255,255,0.3)" />
+    {/* Chart bars on screen */}
+    <rect x="222" y="155" width="12" height="30" rx="2" fill="#e91e8c" opacity="0.8" />
+    <rect x="238" y="140" width="12" height="45" rx="2" fill="#ff4fa7" opacity="0.8" />
+    <rect x="254" y="148" width="12" height="37" rx="2" fill="#e91e8c" opacity="0.6" />
+    {/* Laptop base */}
+    <rect x="100" y="210" width="200" height="8" rx="4" fill="rgba(255,255,255,0.7)" />
+    {/* Person left */}
+    <circle cx="105" cy="175" r="18" fill="rgba(255,255,255,0.9)" />
+    <line x1="105" y1="193" x2="105" y2="225" stroke="rgba(255,255,255,0.7)" strokeWidth="5" strokeLinecap="round" />
+    <line x1="105" y1="205" x2="88" y2="220" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    <line x1="105" y1="205" x2="122" y2="215" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    <line x1="105" y1="225" x2="93" y2="245" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    <line x1="105" y1="225" x2="117" y2="245" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    {/* Person right */}
+    <circle cx="295" cy="175" r="18" fill="rgba(255,255,255,0.9)" />
+    <line x1="295" y1="193" x2="295" y2="225" stroke="rgba(255,255,255,0.7)" strokeWidth="5" strokeLinecap="round" />
+    <line x1="295" y1="205" x2="278" y2="218" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    <line x1="295" y1="205" x2="312" y2="218" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    <line x1="295" y1="225" x2="283" y2="245" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    <line x1="295" y1="225" x2="307" y2="245" stroke="rgba(255,255,255,0.7)" strokeWidth="4" strokeLinecap="round" />
+    {/* Floating dots */}
+    <circle cx="155" cy="75" r="8" fill="rgba(255,255,255,0.5)" />
+    <circle cx="250" cy="68" r="5" fill="rgba(255,255,255,0.4)" />
+    <circle cx="320" cy="110" r="10" fill="rgba(255,255,255,0.3)" />
+    <circle cx="80" cy="130" r="6" fill="rgba(255,255,255,0.4)" />
+  </svg>
+);
 
 const Login = () => {
   const { login } = useAuth();
@@ -10,276 +52,113 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setEmail("");
-    setPassword("");
-    const form = document.querySelector("form");
-    if (form) form.reset();
-  }, []);
+  useEffect(() => { setEmail(""); setPassword(""); }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
     try {
       const res = await api.post("/auth/login", { email, password });
       login(res.data.token);
       navigate("/dashboard");
     } catch (err) {
-      alert(err.response?.data?.message || "Invalid credentials");
+      setError(err.response?.data?.message || "Invalid email or password.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={styles.container}>
-      {/* LEFT SECTION - LOGO */}
-      <div style={styles.leftSection}>
-        <div style={styles.logoWrapper}>
-          <div style={styles.logoMarkWrapper}>
-            <div style={styles.logoMarkInner}>
-              {/* Decorative shapes to mock UPES logo */}
-              <div style={styles.logoBlue} />
-              <div style={styles.logoOrange} />
-              <div style={styles.logoRed} />
-            </div>
-            <h1 style={styles.logoText}>LMS</h1>
-          </div>
-          <div style={styles.logoSubtextContainer}>
-            <span style={styles.logoSubtext}>Program-Level Academic Integrity Risk Intelligence System</span>
-          </div>
-        </div>
+    <div className="auth-root">
+      {/* ── LEFT ── */}
+      <div className="auth-left">
+        <h2 className="auth-left-title">Welcome to<br />Student Portal</h2>
+        <p className="auth-left-sub">Academic Integrity Intelligence System</p>
+        <Illustration />
       </div>
 
-      {/* RIGHT SECTION - LOGIN FORM */}
-      <div style={styles.rightSection}>
-        <div style={styles.loginCard}>
-          <div style={styles.cardHeader}>
-            <div style={styles.smallLogo}>
-               {/* Small logo mock */}
-               <div style={{...styles.logoMarkInner, width: '40px', height: '40px'}} />
-               <span style={styles.smallLogoText}>LMS</span>
+      {/* ── RIGHT ── */}
+      <div className="auth-right">
+        <div className="auth-card">
+          {/* Logo row */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: "linear-gradient(135deg,#e91e8c,#c4186e)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ color: "#fff", fontWeight: 800, fontSize: 14 }}>LMS</span>
             </div>
-            <p style={{ fontSize: '10px', margin: '-5px 0 15px 0', opacity: 0.8, textAlign: 'center' }}>Program-Level Academic Integrity Risk Intelligence System</p>
-            <h2 style={styles.welcomeText}>Welcome to MyLMS</h2>
+            <span style={{ color: "#8892a4", fontSize: 13 }}>Academic Integrity Portal</span>
           </div>
 
-          <form onSubmit={handleSubmit} style={styles.form}>
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>Email Address</label>
-              <input
-                type="text"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="off"
-                style={styles.input}
-              />
-            </div>
+          <h1 className="auth-card-title">Login your Account</h1>
+          <p className="auth-card-sub">Please enter your details</p>
 
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>Password</label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="new-password"
-                style={styles.input}
-              />
+          {error && (
+            <div className="auth-error">
+              <FiAlertCircle size={16} />{error}
             </div>
+          )}
 
-            {/* MOCK RECAPTCHA */}
-            <div style={styles.recaptcha}>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <input type="checkbox" style={{ width: "20px", height: "20px" }} />
-                <span>I'm not a robot</span>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <FiRefreshCcw size={24} color="#1a73e8" />
-                <span style={{ fontSize: "10px", marginTop: "4px" }}>reCAPTCHA</span>
-                <span style={{ fontSize: "8px", opacity: 0.7 }}>Privacy - Terms</span>
-              </div>
-            </div>
-
-            <div style={styles.optionsRow}>
-              <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px" }}>
+          <form onSubmit={handleSubmit}>
+            <div className="auth-field">
+              <label className="auth-label">Email Address</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon"><FiMail size={16} /></span>
                 <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.value)}
+                  className="auth-input"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="off"
+                  required
                 />
+              </div>
+            </div>
+
+            <div className="auth-field">
+              <label className="auth-label">Password</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon"><FiLock size={16} /></span>
+                <input
+                  className="auth-input"
+                  type={showPass ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                  required
+                />
+                <button type="button" className="auth-input-toggle" onClick={() => setShowPass(!showPass)}>
+                  {showPass ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="auth-options">
+              <label className="auth-remember">
+                <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
                 Remember me
               </label>
-              <Link to="/forgot-password" style={styles.forgotLink}>
-                Forgot Password?
-              </Link>
+              <Link to="/forgot-password" className="auth-forgot">Forgot password?</Link>
             </div>
 
-            <button type="submit" style={styles.loginBtn}>
-              LOGIN
+            <button type="submit" className="auth-btn" disabled={loading}>
+              {loading ? "Logging in…" : "Log In"}
             </button>
-            
-            <div style={{ marginTop: "15px", textAlign: "center" }}>
-              <Link to="/register" style={styles.forgotLink}>
-                Create an account
-              </Link>
-            </div>
           </form>
+
+          <div className="auth-footer">
+            Don't have an account?
+            <Link to="/register" className="auth-link">Sign up</Link>
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: "flex",
-    height: "100vh",
-    width: "100%",
-    background: "linear-gradient(135deg, #130b35 0%, #351347 100%)",
-    fontFamily: "Inter, sans-serif",
-    color: "#fff",
-  },
-  leftSection: {
-    flex: 6,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  logoMarkWrapper: {
-    display: "flex",
-    alignItems: "center",
-    gap: "20px",
-  },
-  logoMarkInner: {
-    width: "80px",
-    height: "80px",
-    background: "linear-gradient(135deg, #0f62b2 0%, #d7285c 50%, #f6a117 100%)",
-    borderRadius: "16px",
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    boxShadow: "0px 10px 20px rgba(0,0,0,0.5)",
-  },
-  logoText: {
-    fontSize: "85px",
-    fontWeight: "600",
-    letterSpacing: "4px",
-    margin: 0,
-    textShadow: "0px 5px 15px rgba(0,0,0,0.4)",
-  },
-  logoSubtextContainer: {
-    borderTop: "3px solid #fff",
-    marginTop: "5px",
-    paddingTop: "15px",
-    width: "100%",
-    textAlign: "center",
-  },
-  logoSubtext: {
-    fontSize: "15px",
-    letterSpacing: "3px",
-    fontWeight: "500",
-    textAlign: "center",
-  },
-  rightSection: {
-    flex: 4,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loginCard: {
-    width: "420px",
-    background: "linear-gradient(150deg, #18b7f7 0%, #5d288d 100%)",
-    borderRadius: "12px",
-    padding: "40px",
-    boxShadow: "0px 12px 30px rgba(0,0,0,0.4)",
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardHeader: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginBottom: "20px",
-  },
-  smallLogo: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    marginBottom: "8px",
-  },
-  smallLogoText: {
-    fontSize: "32px",
-    fontWeight: "700",
-    letterSpacing: "2px",
-  },
-  welcomeText: {
-    fontSize: "20px",
-    fontWeight: "600",
-    margin: 0,
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-  },
-  inputGroup: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "6px",
-  },
-  label: {
-    fontSize: "13px",
-    fontWeight: "600",
-  },
-  input: {
-    padding: "12px",
-    borderRadius: "4px",
-    border: "none",
-    background: "#f2f4f8",
-    fontSize: "15px",
-    color: "#333",
-    outline: "none",
-  },
-  recaptcha: {
-    background: "#f9f9f9",
-    color: "#333",
-    border: "1px solid #d3d3d3",
-    borderRadius: "4px",
-    padding: "10px 15px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "5px",
-  },
-  optionsRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "10px",
-    marginBottom: "15px",
-  },
-  forgotLink: {
-    color: "#fff",
-    fontSize: "13px",
-    textDecoration: "none",
-  },
-  loginBtn: {
-    padding: "14px",
-    border: "none",
-    borderRadius: "6px",
-    background: "linear-gradient(to right, #1d6e9f, #23548a)",
-    color: "#fff",
-    fontSize: "16px",
-    fontWeight: "600",
-    cursor: "pointer",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-  },
 };
 
 export default Login;
