@@ -3,7 +3,7 @@ import AuthContext from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { FiMenu, FiBook, FiTool, FiBookOpen, FiHome, FiBell, FiPower } from "react-icons/fi";
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const Navbar = () => {
     }}>
       {/* LEFT - LOGO & TITLE */}
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <FiMenu size={24} color="#333" style={{ cursor: "pointer", marginRight: "10px" }} />
+        <FiMenu size={24} color="#333" onClick={onToggleSidebar} style={{ cursor: "pointer", marginRight: "10px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
            {/* small colored logo block */}
            <div style={{ width: "22px", height: "22px", background: "linear-gradient(135deg, #0f62b2, #d7285c, #f6a117)", borderRadius: "4px" }} />
