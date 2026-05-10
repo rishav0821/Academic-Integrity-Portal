@@ -11,6 +11,7 @@ import Reports from "./pages/Reports";
 import CourseDetail from "./pages/CourseDetail";
 import Submissions from "./pages/Submissions";
 import DataEntry from "./pages/DataEntry";
+import Tools from "./pages/Tools";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -48,6 +49,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Submissions />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tools"
+          element={
+            <ProtectedRoute>
+              <Tools />
             </ProtectedRoute>
           }
         />
