@@ -1,0 +1,92 @@
+# Evaluation Prep: Academic Integrity Risk Intelligence System
+
+Congratulations on reaching the mid-semester evaluation! Evaluators (professors or panelists) usually want to see **three things**:
+1. You understand the problem you are solving.
+2. You deeply understand the technology you used (you didn't just copy-paste).
+3. You are aware of your project's current limitations and have a plan for the final submission.
+
+Here is a comprehensive list of potential questions, sorted by category, and how you should answer them, along with counter-questions they might throw at you.
+
+---
+
+## 1. Problem Statement & Conceptual Questions
+
+**Q: What is the exact problem your portal solves?**
+* **Answer Strategy:** Clearly state that academic dishonesty is hard to track at a program level. Instead of isolated incident tracking, your system acts as a "Program-Level Academic Integrity Risk Intelligence System" to monitor, log, and analyze integrity risks systematically. Avoid saying "it stops cheating." Say "it provides actionable intelligence to manage risks."
+
+**Q: Why did you build this from scratch instead of using an existing LMS (like Canvas, Moodle, or Blackboard plugins)?**
+* **Answer Strategy:** Existing LMS plugins evaluate individual assignments. Our system aggregates data to provide a *program-wide risk intelligence* dashboard. It integrates reporting, user tracking, and analytics into a centralized standard, filling the gap of high-level overview.
+
+**Counter-Question:** "But can't a university just rely on Turnitin?"
+* **Defense:** Turnitin is a tool for similarity checking per paper. It doesn't holistically track behavioral trends, recurring offenders across multiple courses, or analyze department-wide vulnerabilities over semesters like an Intelligence System does.
+
+---
+
+## 2. Architecture & Technology Stack
+
+**Q: Walk me through your tech stack. Why MERN (MongoDB, Express, React, Node)?**
+* **Answer Strategy:**
+  * **MongoDB:** Being a NoSQL database, it's highly flexible and scalable for unstructured/semi-structured data like incident logs and reports.
+  * **Express/Node.js:** Fast, asynchronous, and perfect for handling many lightweight API requests (like fetching dashboard stats or validating users).
+  * **React (with Vite):** Allows to build a highly responsive, single-page application (SPA). Vite makes development lighting fast compared to Create-React-App.
+
+**Q: Explain how authentication works in your application.**
+* **Answer Strategy:** State that it is a **stateless architecture** using JSON Web Tokens (JWT).
+  1. The user logs in via the React frontend.
+  2. The Node.js server verifies the credentials against hashed passwords in MongoDB (using bcrypt).
+  3. If correct, the server generates a JWT and sends it back.
+  4. The frontend stores this JWT in `localStorage` (via React AuthContext) and attaches it as a Bearer token to every subsequent Axios API request.
+
+**Counter-Question:** "Isn't storing JWTs in `localStorage` vulnerable to XSS (Cross-Site Scripting) attacks?"
+* **Defense:** Acknowledge it! Say: "Yes, `localStorage` is accessible via JavaScript, making it susceptible to XSS if the frontend doesn't sanitize inputs. For the final production build, a more secure approach would be to store the token in an `HttpOnly` secure cookie, which Javascript cannot access." *(Evaluators love students who admit limitations and know how to fix them).*
+
+---
+
+## 3. Implementation Details & Database Design
+
+**Q: How do you secure user passwords?**
+* **Answer Strategy:** Mention `bcrypt`. Emphasize that passwords are *never* stored in plain text. Whenever a user registers, a salt is generated, the password is hashed, and only the hash is stored in MongoDB.
+
+**Q: I see you have a Forgot Password module. How does that workflow operate securely?**
+* **Answer Strategy:**
+  1. User enters their email.
+  2. Server generates a random, complex temporary token.
+  3. The server hashes this token and stores it in the database with a 15-minute expiration time (`resetPasswordExpire`).
+  4. The unhashed token is emailed to the user as a link.
+  5. When clicked, the backend checks if the token matches the hash and hasn't expired before allowing a password change.
+
+**Counter-Question:** "What happens if two users try to register with the same email?"
+* **Defense:** "Our MongoDB Mongoose Schema applies a `unique: true` constraint on the email field. The backend catches this database error and sends a formatted 400 Bad Request error to the frontend, displaying 'Email already in use'."
+
+**Q: You mentioned migrating to real-time database data. Are you using localized DB or cloud?**
+* **Answer Strategy:** Clarify that you successfully connected the backend application to a **MongoDB Atlas** cloud database. This allows the system to be accessed from anywhere without relying on a local `mongod` instance, which is crucial for a production-ready application.
+
+---
+
+## 4. Frontend & UI/UX
+
+**Q: How do you protect routes on the frontend?**
+* **Answer Strategy:** React uses a `ProtectedRoute` wrapper component. It checks the `AuthContext` to see if `isAuthenticated` is true. If false, it redirects the user to the `/login` page using React Router.
+
+**Counter-Question:** "If I just manually change `isAuthenticated` to true in my local storage/state, can I hack into the dashboard?"
+* **Defense:** "You could see the UI, but the UI would be empty. Our backend middleware (`protect`) verifies the cryptographic signature of the JWT for *every single data request*. So, you'd be looking at a blank dashboard because the API would return a 401 Unauthorized."
+
+---
+
+## 5. Future Scope & Limitations (The "What's missing?" trap)
+
+Evaluators will find a flaw or something missing. **Do not get defensive. Own it as 'Future Scope'.**
+
+**Q (Trap): "Your app doesn't currently notify administrators instantly when a major report is filed."**
+* **Response:** "That's an excellent point. Currently, the admin must check the dashboard to see new data. For the final evaluation, I plan to leverage WebSockets (e.g., Socket.io) to push real-time notifications to the admin dashboard, or integrate an email alert system using NodeMailer for 'High Risk' cases."
+
+**Q (Trap): "How will this handle massive amounts of universities joining?"**
+* **Response:** "Right now, it's an MVP (Minimum Viable Product) functioning natively. To scale, we'd look into clustering the Node server, adding Redis caching, and optimizing our MongoDB indexes. We might also transition to a multi-tenant database design."
+
+---
+
+## 🚀 Pro-Tips for the Evaluation
+
+1. **Keep the demo smooth:** Have the database, backend, and frontend already running, logged in, and populated with *dummy data* (don't show a blank dashboard).
+2. **Drive the conversation:** While demonstrating the dashboard, *explain* why the data is useful. E.g., "As you can see, this graph highlights an uptick in plagiarism in the Computer Science department..."
+3. **If you don't know an answer:** Say, *"I haven't implemented that specific edge case yet, but my approach would be to..."*. Never say "I don't know"!
